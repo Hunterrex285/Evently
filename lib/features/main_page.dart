@@ -33,8 +33,8 @@ class _MainScaffoldState extends State<MainScaffold> {
         scrolledUnderElevation: 0,
         backgroundColor: const Color(0xFFF3EFD4),
         title: Text(
-          "Good Morning, ${user?.name.split(" ").first ?? "Student"}!",
-          style: const TextStyle(color: Colors.black87),
+          "Greetings, ${user?.name.split(" ").first ?? "Student"}!",
+          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -44,12 +44,19 @@ class _MainScaffoldState extends State<MainScaffold> {
         ],
       ),
       AppBar(
-        title: const Text("Events"),
-        backgroundColor: Colors.white,
-      ),
-      AppBar(
-        title: const Text("Community"),
-        backgroundColor: Colors.white,
+        
+        scrolledUnderElevation: 0,
+        backgroundColor: const Color(0xFFF3EFD4),
+        title: Text(
+          "Events",
+          style: const TextStyle(color: Colors.black87),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none, color: Colors.black87),
+          ),
+        ],
       ),
       AppBar(
         title: const Text("Profile"),

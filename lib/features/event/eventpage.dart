@@ -34,31 +34,7 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Row(
-          children: [
-            Text(
-              "Hello David ",
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_none, color: Colors.black),
-            onPressed: () {},
-          ),
-          CircleAvatar(
-            backgroundImage: AssetImage('assets/profile.png'), // Add your profile image
-          ),
-          SizedBox(width: 10),
-        ],
-      ),
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +144,6 @@ class EventPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
