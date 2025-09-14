@@ -26,9 +26,8 @@ class PostCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         border: Border.all(
-          // 👈 Stroke here
           color: const Color.fromARGB(255, 0, 0, 0),
-          width: 1.5, // stroke thickness
+          width: 1.5, 
         ),
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
@@ -66,7 +65,10 @@ class PostCard extends StatelessWidget {
               ]),
               const SizedBox(height: 8),
               Text(post.title,
-                  style: const TextStyle(fontSize: 16, color: Colors.black)),
+                  style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w700)),
+              const SizedBox(height: 8),
+              Text(post.desc,
+                  style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500)),
               const SizedBox(height: 8),
               Row(
                 children: [

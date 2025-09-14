@@ -21,7 +21,7 @@ class PostService {
   Future<List<Post>> getPostsByUser(String userId) async {
     QuerySnapshot snapshot = await _db
         .collection("posts")
-        .where("userId", isEqualTo: userId)
+        .where("authorId", isEqualTo: userId)
         .get();
 
     return snapshot.docs

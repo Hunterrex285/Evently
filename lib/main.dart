@@ -1,3 +1,4 @@
+import 'package:evently/features/auth/onboarding.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:evently/features/auth/signup_page.dart';
-import 'package:evently/features/main_page.dart'; // <-- Import your main scaffold
+import 'package:evently/features/main_page.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: _authCheck(context),
+      home: OnboardingPage(), // Change this to _authCheck(context) to enable auth check
     );
   }
 
@@ -63,6 +64,5 @@ class MyApp extends StatelessWidget {
     return const SignUpPage();
   }
 }
-
 
 }

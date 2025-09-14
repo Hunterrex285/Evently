@@ -27,7 +27,5 @@ Evently is a **community-driven app for college students**, designed to help stu
 
 ## 📸 Screenshots
 
-![alt text](image.png) 
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](image.png)  ![alt text](image-1.png)  ![alt text](image-2.png)
 

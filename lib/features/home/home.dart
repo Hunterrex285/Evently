@@ -102,7 +102,6 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
-        // Hero / CTA card
         HeroCard(
           title: "What’s new on campus?",
           subtitle: "Share notes, promote events, or ask questions.",
@@ -116,7 +115,6 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
 
         const SizedBox(height: 16),
 
-        // Category chips
         _buildCategoryChips(),
 
         // Friends row
@@ -124,7 +122,6 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
 
         const SizedBox(height: 12),
 
-        // Discovery row
         DiscoveryRow(onViewAll: () {}),
 
         const SizedBox(height: 12),
@@ -151,7 +148,6 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
           final index = entry.key;
           final post = entry.value;
 
-          // pick color cyclically
           final bgColor = postColors[index % 3];
 
           return PostCard(
@@ -159,7 +155,7 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
             myVote: _myVotes[post.id] ?? 0,
             onUpvote: () => _vote(post.id, 1),
             onDownvote: () => _vote(post.id, -1),
-            bgColor: bgColor, // <-- pass color
+            bgColor: bgColor, 
           );
         }),
       ],
@@ -183,7 +179,7 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
               labelStyle: TextStyle(
                   color: selected ? Colors.white : Color(0xFF305450),
                   fontWeight: FontWeight.w700),
-              backgroundColor: Color(0xFFF3EFD4),
+              backgroundColor: Color(0xFFF9F5EC),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                   side: BorderSide(

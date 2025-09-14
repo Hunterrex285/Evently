@@ -25,13 +25,13 @@ class _MainScaffoldState extends State<MainScaffold> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: true);
     final user = userProvider.user;
-    final bg = const Color(0xFFF3EFD4);
+    final bg = const Color(0xFFF9F5EC);
 
     // Build AppBars dynamically based on user name
     final List<PreferredSizeWidget?> appBars = [
       AppBar(
         scrolledUnderElevation: 0,
-        backgroundColor: const Color(0xFFF3EFD4),
+        backgroundColor: const Color(0xFFF9F5EC),
         title: Text(
           "Greetings, ${user?.name.split(" ").first ?? "Student"}!",
           style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
@@ -46,10 +46,10 @@ class _MainScaffoldState extends State<MainScaffold> {
       AppBar(
         
         scrolledUnderElevation: 0,
-        backgroundColor: const Color(0xFFF3EFD4),
+        backgroundColor: const Color(0xFFF9F5EC),
         title: Text(
           "Events",
-          style: const TextStyle(color: Colors.black87),
+          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -59,8 +59,12 @@ class _MainScaffoldState extends State<MainScaffold> {
         ],
       ),
       AppBar(
-        title: const Text("Profile"),
-        backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
+        backgroundColor: const Color(0xFFF9F5EC),
+        title: Text(
+          "Profile",
+          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+        ),
       ),
     ];
 

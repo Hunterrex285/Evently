@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Post {
   final String id;
   final String author;
+  final String authorId;
   final String desc;          // ✅ new field
   final String title;
   final String category;
@@ -14,6 +15,7 @@ class Post {
   Post({
     required this.id,
     required this.author,
+    required this.authorId,
     required this.desc,
     required this.title,
     required this.category,
@@ -28,6 +30,7 @@ class Post {
     Post post = Post(
       id: docId,
       author: data['author'] ?? data['authorId'] ?? '',
+      authorId: data['authorId'] ?? '',
       desc: data['desc'] ?? '',
       title: data['title'] ?? '',
       category: data['category'] ?? 'Community',
@@ -49,6 +52,7 @@ class Post {
   Map<String, dynamic> toMap() {
     return {
       'author': author,
+      'authorId': authorId,
       'desc': desc,
       'title': title,
       'category': category,

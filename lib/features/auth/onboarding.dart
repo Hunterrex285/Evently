@@ -1,6 +1,7 @@
 import 'package:evently/features/main_page.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -19,13 +20,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
   String? year;
   String? gender;
   String? bio;
-  String? avatar;
+  late String avatar;
 
   final List<String> avatars = [
-    "assets/avatars/avatar1.png",
-    "assets/avatars/avatar2.png",
-    "assets/avatars/avatar3.png",
+    'icons/avatars/1.svg',
+    'icons/avatars/2.svg',
+    'icons/avatars/3.svg',
+    'icons/avatars/4.svg',
+    'icons/avatars/5.svg',
+    'icons/avatars/6.svg',
+    'icons/avatars/7.svg',
+    'icons/avatars/8.svg',
+    'icons/avatars/9.svg',
+    'icons/avatars/10.svg',
+    'icons/avatars/11.svg',
+    'icons/avatars/12.svg',
   ];
+
+  int currentIndex = 0; // <-- define it
 
   void _nextPage() {
     if (_currentPage < 4) {
@@ -153,26 +165,64 @@ class _OnboardingPageState extends State<OnboardingPage> {
           ),
           _buildPage(
             "Choose Avatar",
-            Wrap(
-              spacing: 10,
-              children: avatars.map((a) {
-                return GestureDetector(
-                  onTap: () => setState(() => avatar = a),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: avatar == a ? Colors.blue : Colors.grey,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_left, size: 40),
+                      onPressed: () {
+                        setState(() {
+                          currentIndex = (currentIndex - 1 + avatars.length) %
+                              avatars.length;
+                          avatar = avatars[currentIndex];
+                        });
+                      },
                     ),
-                    child: Image.asset(a, width: 80, height: 80),
-                  ),
-                );
-              }).toList(),
+                    GestureDetector(
+                      onHorizontalDragEnd: (details) {
+                        setState(() {
+                          if (details.primaryVelocity! < 0) {
+                            // Swipe left → next
+                            currentIndex = (currentIndex + 1) % avatars.length;
+                          } else if (details.primaryVelocity! > 0) {
+                            // Swipe right → previous
+                            currentIndex = (currentIndex - 1 + avatars.length) %
+                                avatars.length;
+                          }
+                          avatar = avatars[currentIndex];
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: SvgPicture.asset(
+                          avatars[currentIndex],
+                          width: 144,
+                          height: 144,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_right, size: 40),
+                      onPressed: () {
+                        setState(() {
+                          currentIndex = (currentIndex + 1) % avatars.length;
+                          avatar = avatars[currentIndex];
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "Swipe left/right or use arrows to choose avatar",
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
     );
