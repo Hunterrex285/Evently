@@ -1,68 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently/models/participants_model.dart';
 import '../models/event_model.dart';
 
 class EventService {
-  final CollectionReference _eventCollection =
-      FirebaseFirestore.instance.collection('events');
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // Create Event
-  Future<void> createEvent(Event event) async {
-    await _eventCollection.add(event.toMap());
+  /// Fetch events (last 1 month cap)
+  Stream<List<Event>> getAllEvents() {
+    final oneMonthAgo = DateTime.now().subtract(const Duration(days: 30));
+
+    return _db
+        .collection("events")
+        .where("endTime", isGreaterThanOrEqualTo: oneMonthAgo)
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => Event.fromDoc(doc)).toList());
   }
 
-  // Fetch All Events
-  Stream<List<Event>> getEvents() {
-    return _eventCollection.snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return Event.fromMap(doc.data() as Map<String, dynamic>, doc.id);
-      }).toList();
-    });
+  /// Register user into event participants subcollection
+  Future<void> registerUser(String eventId, Participant participant) async {
+    await _db
+        .collection("events")
+        .doc(eventId)
+        .collection("participants")
+        .doc(participant.uid)
+        .set(participant.toMap());
   }
 
-  // Fetch Single Event
-  Future<Event?> getEventById(String eventId) async {
-    final doc = await _eventCollection.doc(eventId).get();
-    if (doc.exists) {
-      return Event.fromMap(doc.data() as Map<String, dynamic>, doc.id);
-    }
-    return null;
+  /// Fetch all participants for a given event
+  Stream<List<Participant>> getParticipants(String eventId) {
+    return _db
+        .collection("events")
+        .doc(eventId)
+        .collection("participants")
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => Participant.fromMap(doc.data())).toList());
   }
 
-  // Update Event
-  Future<void> updateEvent(String eventId, Map<String, dynamic> data) async {
-    await _eventCollection.doc(eventId).update(data);
-  }
-
-  // Delete Event
-  Future<void> deleteEvent(String eventId) async {
-    await _eventCollection.doc(eventId).delete();
-  }
-
-  // --- Participants ---
-
-  Future<void> addParticipant(String eventId, String userId) async {
-    await _eventCollection.doc(eventId).update({
-      'participants': FieldValue.arrayUnion([userId]),
-    });
-  }
-
-  Future<void> removeParticipant(String eventId, String userId) async {
-    await _eventCollection.doc(eventId).update({
-      'participants': FieldValue.arrayRemove([userId]),
-    });
-  }
-
-  // --- Organizers/Admins ---
-
+  /// Add an organizer
   Future<void> addOrganizer(String eventId, String userId) async {
-    await _eventCollection.doc(eventId).update({
-      'organizers': FieldValue.arrayUnion([userId]),
-    });
-  }
-
-  Future<void> removeOrganizer(String eventId, String userId) async {
-    await _eventCollection.doc(eventId).update({
-      'organizers': FieldValue.arrayRemove([userId]),
+    await _db.collection("events").doc(eventId).update({
+      "organizers": FieldValue.arrayUnion([userId])
     });
   }
 }

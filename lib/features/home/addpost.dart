@@ -71,6 +71,7 @@ class _AddPostPageState extends State<AddPostPage> {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       author: user.name,
       authorId: user.uid,
+      authorPfp: user.avatar,
       desc: desc,
       title: title,
       category: _selectedCategory ?? 'All',

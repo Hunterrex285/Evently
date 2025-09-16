@@ -1,4 +1,3 @@
-import 'package:evently/features/auth/onboarding.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: OnboardingPage(), // Change this to _authCheck(context) to enable auth check
+      home: _authCheck(context),
     );
   }
 

@@ -4,49 +4,47 @@ class Event {
   final String id;
   final String title;
   final String description;
-  final DateTime date;
-  final String imageUrl;
-  final String createdBy;
-  final List<String> tags;
-  final List<String> participants; // all attendees
-  final List<String> organizers;   // admins/organizers
+  final DateTime startTime;
+  final DateTime endTime;
+  final String link;
+  final String? bannerUrl;
+  final List<String> organizers;
 
   Event({
     required this.id,
     required this.title,
     required this.description,
-    required this.date,
-    required this.imageUrl,
-    required this.createdBy,
-    required this.tags,
-    required this.participants,
-    required this.organizers,
+    required this.startTime,
+    required this.endTime,
+    required this.link,
+    this.bannerUrl,
+    this.organizers = const [],
   });
 
-  factory Event.fromMap(Map<String, dynamic> map, String docId) {
+  factory Event.fromDoc(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+
     return Event(
-      id: docId,
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      date: (map['date'] as Timestamp).toDate(),
-      imageUrl: map['imageUrl'] ?? '',
-      createdBy: map['createdBy'] ?? '',
-      tags: List<String>.from(map['tags'] ?? []),
-      participants: List<String>.from(map['participants'] ?? []),
-      organizers: List<String>.from(map['organizers'] ?? []),
+      id: doc.id,
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
+      startTime: (data['startTime'] as Timestamp).toDate(),
+      endTime: (data['endTime'] as Timestamp).toDate(),
+      link: data['link'] ?? '',
+      bannerUrl: data['bannerUrl'],
+      organizers: List<String>.from(data['organizers'] ?? []),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
-      'description': description,
-      'date': Timestamp.fromDate(date),
-      'imageUrl': imageUrl,
-      'createdBy': createdBy,
-      'tags': tags,
-      'participants': participants,
-      'organizers': organizers,
+      "title": title,
+      "description": description,
+      "startTime": startTime,
+      "endTime": endTime,
+      "link": link,
+      "bannerUrl": bannerUrl,
+      "organizers": organizers,
     };
   }
 }

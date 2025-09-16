@@ -4,18 +4,20 @@ class Post {
   final String id;
   final String author;
   final String authorId;
-  final String desc;          // ✅ new field
+  final String authorPfp;     // ✅ new field
+  final String desc;
   final String title;
   final String category;
-  final DateTime createdAt;   // ✅ switched from Timestamp → DateTime
-  int votes;                  // ✅ replaces upvotes
-  final int comments;         // ✅ new field
-  final String tag;       // ✅ simplified (instead of list of tags)
+  final DateTime createdAt;
+  int votes;
+  final int comments;
+  final String tag;
 
   Post({
     required this.id,
     required this.author,
     required this.authorId,
+    required this.authorPfp,  // ✅ required
     required this.desc,
     required this.title,
     required this.category,
@@ -27,10 +29,11 @@ class Post {
 
   /// Firestore → Post
   factory Post.fromFirestore(Map<String, dynamic> data, String docId) {
-    Post post = Post(
+    return Post(
       id: docId,
       author: data['author'] ?? data['authorId'] ?? '',
       authorId: data['authorId'] ?? '',
+      authorPfp: data['authorPfp'] ?? '',   // ✅ fallback to empty if missing
       desc: data['desc'] ?? '',
       title: data['title'] ?? '',
       category: data['category'] ?? 'Community',
@@ -44,8 +47,6 @@ class Post {
               ? data['tags'][0]
               : '')) as String,
     );
-    
-    return post;
   }
 
   /// Post → Firestore
@@ -53,6 +54,7 @@ class Post {
     return {
       'author': author,
       'authorId': authorId,
+      'authorPfp': authorPfp,   // ✅ include when writing
       'desc': desc,
       'title': title,
       'category': category,

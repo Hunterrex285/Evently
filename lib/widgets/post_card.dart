@@ -2,6 +2,7 @@ import 'package:evently/models/post_model.dart';
 import 'package:evently/widgets/tag_chip.dart';
 import 'package:evently/widgets/vote_column.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PostCard extends StatelessWidget {
   const PostCard(
@@ -27,7 +28,7 @@ class PostCard extends StatelessWidget {
         color: bgColor,
         border: Border.all(
           color: const Color.fromARGB(255, 0, 0, 0),
-          width: 1.5, 
+          width: 1.5,
         ),
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
@@ -44,8 +45,24 @@ class PostCard extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                CircleAvatar(
-                    radius: 28, backgroundColor: Colors.indigo.shade200),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+                  clipBehavior: Clip.hardEdge,
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // background
+                    borderRadius: BorderRadius.circular(80),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                  ),
+                  child: SvgPicture.asset(
+                    post.authorPfp,
+                    fit: BoxFit.contain,
+                  ),
+                ),
                 const SizedBox(width: 8),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,10 +82,16 @@ class PostCard extends StatelessWidget {
               ]),
               const SizedBox(height: 8),
               Text(post.title,
-                  style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w700)),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700)),
               const SizedBox(height: 8),
               Text(post.desc,
-                  style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500)),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500)),
               const SizedBox(height: 8),
               Row(
                 children: [
