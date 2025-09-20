@@ -83,18 +83,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         // Profile Header
                         Container(
+                          height: 320,
                           padding: const EdgeInsets.all(16),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF1947E5),
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(32),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
                                 clipBehavior: Clip.hardEdge,
-                                width: 80,
-                                height: 80,
+                                width: 170,
+                                height: 170,
                                 decoration: BoxDecoration(
                                   color: Colors.white, // background
-                                  borderRadius: BorderRadius.circular(80),
+                                  borderRadius: BorderRadius.circular(170),
                                   border: Border.all(
                                     color: Colors.black,
                                     width: 2,
@@ -105,43 +112,73 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.contain,
                                 ),
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user.name,
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        Text(user.dept),
-                                        const SizedBox(width: 12),
-                                        Text("Batch: ${user.yearOfPassing}"),
-                                        const SizedBox(width: 12),
-                                        Text(user.gender == "Male"
-                                            ? "Guy"
-                                            : "Gal"),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.green[100],
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Text("User ID: ${user.uid}"),
-                                    ),
-                                  ],
+                              const SizedBox(width: 12),
+                              Text(
+                                user.name,
+                                style: const TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                              )
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(44),
+                                    ),
+                                    child: Text(
+                                      user.dept,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(width: 12),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(44),
+                                    ),
+                                    child: Text(
+                                      user.yearOfPassing,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(44),
+                                    ),
+                                    child: Text(
+                                      user.gender == "Male" ? "Guy" : "Gal",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -156,7 +193,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               "Posts",
                               style: TextStyle(
-                                fontSize: 20,
+                                fontFamily: 'Montserrat',
+                                fontSize: 27,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
                               ),

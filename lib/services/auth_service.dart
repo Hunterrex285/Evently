@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently/models/club_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  /// Create User Document
   Future<void> _createUserDocument(User user, String name) async {
-    final docRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+    final docRef = _db.collection('users').doc(user.uid);
 
-    // Only create if it doesn't exist (prevents overwriting on re-signup)
     final doc = await docRef.get();
     if (!doc.exists) {
       await docRef.set({
@@ -18,11 +20,33 @@ class AuthService {
         'bio': '',
         'avatar': user.photoURL ?? '',
         'createdAt': FieldValue.serverTimestamp(),
+        'role': 'user', // to differentiate later
       });
     }
   }
 
-  Future<String?> signUpWithEmailAndPassword({
+  /// Create Club Document
+  Future<void> _createClubDocument(
+      User user, String clubName) async {
+    final docRef = _db.collection('clubs').doc(user.uid);
+
+    final doc = await docRef.get();
+    if (!doc.exists) {
+      await docRef.set({
+        'uid': user.uid,
+        'clubName': clubName,
+        'email': user.email,
+        'bio': '',
+        'avatar': user.photoURL ?? '',
+        'verified': false, // they will request verification later
+        'createdAt': FieldValue.serverTimestamp(),
+        'role': 'club', // to differentiate
+      });
+    }
+  }
+
+  /// Normal User Signup
+  Future<String?> signUpUser({
     required String name,
     required String email,
     required String password,
@@ -37,29 +61,47 @@ class AuthService {
       User? user = userCredential.user;
 
       if (user != null) {
-        // Save user doc in Firestore
         await _createUserDocument(user, name);
-
-        // Optionally send verification email
         await user.sendEmailVerification();
       }
 
       return user?.email;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        return 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        return 'An account already exists for that email.';
-      } else if (e.code == 'invalid-email') {
-        return 'Invalid email address.';
-      } else {
-        return 'Firebase Auth error: ${e.message}';
-      }
+      return _handleAuthError(e);
     } catch (e) {
       return 'Error: $e';
     }
   }
 
+  /// Club Signup
+  Future<String?> signUpClub({
+    required String clubName,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await _createClubDocument(user, clubName);
+        await user.sendEmailVerification();
+      }
+
+      return user?.email;
+    } on FirebaseAuthException catch (e) {
+      return _handleAuthError(e);
+    } catch (e) {
+      return 'Error: $e';
+    }
+  }
+
+  /// Sign In (works for both user & club)
   Future<String?> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -70,19 +112,32 @@ class AuthService {
         password: password.trim(),
       );
 
-      User? user = userCredential.user;
-
-      return user?.email;
+      return userCredential.user?.email;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        return 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        return 'Wrong password provided.';
-      } else {
-        return 'Firebase Auth error: ${e.message}';
-      }
+      return _handleAuthError(e);
     } catch (e) {
       return 'Error: $e';
     }
   }
+
+  /// Handle Auth Errors
+  String _handleAuthError(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'weak-password':
+        return 'The password provided is too weak.';
+      case 'email-already-in-use':
+        return 'An account already exists for that email.';
+      case 'invalid-email':
+        return 'Invalid email address.';
+      case 'user-not-found':
+        return 'No user found for that email.';
+      case 'wrong-password':
+        return 'Wrong password provided.';
+      default:
+        return 'Firebase Auth error: ${e.message}';
+    }
+  }
+
+
+
 }

@@ -21,9 +21,9 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
 
   // Define 4 repeating colors
   final postColors = [
-    const Color(0xFFF5DF79), // soft yellow
-    const Color(0xFFB5D569), // soft green
-    const Color(0xFFEB8020), // orange tone
+    const Color(0xFFFFBD12), // soft yellow
+    const Color(0xFFFFC7DE), // soft green
+    const Color(0xFF61E4C5), // orange tone
   ];
 
   @override
@@ -103,8 +103,6 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
         HeroCard(
-          title: "What’s new on campus?",
-          subtitle: "Share notes, promote events, or ask questions.",
           iconPath: "icons/hero.svg", // <-- pass PNG here
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

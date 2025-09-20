@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void signUp() async {
     setState(() => isLoading = true);
     try {
-      final result = await authService.signUpWithEmailAndPassword(
+      final result = await authService.signUpUser(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
@@ -100,7 +100,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false, // prevents the screen from resizing
 
-      backgroundColor: const Color(0xFFF3EFD4),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),

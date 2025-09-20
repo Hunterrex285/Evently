@@ -1,10 +1,11 @@
+import 'package:evently/features/auth/rolepage.dart';
+import 'package:evently/providers/club_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'package:evently/features/auth/signup_page.dart';
 import 'package:evently/features/main_page.dart'; 
 
 void main() async {
@@ -17,6 +18,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ClubProvider()),
       ],
       child: const MyApp(),
     ),
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Montserrat',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
@@ -60,7 +63,7 @@ class MyApp extends StatelessWidget {
       },
     );
   } else {
-    return const SignUpPage();
+    return const RolePage();
   }
 }
 

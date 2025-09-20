@@ -13,7 +13,7 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   final List<Widget> _pages = [
     const CollegeHomePage(),
@@ -23,49 +23,124 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: true);
-    final user = userProvider.user;
     final bg = const Color(0xFFF9F5EC);
 
     // Build AppBars dynamically based on user name
     final List<PreferredSizeWidget?> appBars = [
       AppBar(
+        centerTitle: true,
+        toolbarHeight: 118, // taller height
         scrolledUnderElevation: 0,
-        backgroundColor: const Color(0xFFF9F5EC),
-        title: Text(
-          "Greetings, ${user?.name.split(" ").first ?? "Student"}!",
-          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+        backgroundColor: const Color(0xFF1947E5),
+        leading: IconButton(
+          onPressed: () {},
+          icon:
+              const Icon(Icons.menu, color: Color.fromARGB(221, 255, 255, 255)),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 16), // push text lower
+          child: Align(
+            alignment: Alignment.bottomCenter, // align title to bottom
+            child: Text(
+              "Evently",
+              style: const TextStyle(
+                color: Color.fromARGB(221, 255, 255, 255),
+                fontWeight: FontWeight.bold,
+                fontSize: 27,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+          ),
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.notifications_none, color: Colors.black87),
+            icon: const Icon(Icons.notifications_none,
+                color: Color.fromARGB(221, 255, 255, 255)),
           ),
         ],
-      ),
+      ),  
       AppBar(
-        
+        centerTitle: true,
+        toolbarHeight: 180, // taller height
         scrolledUnderElevation: 0,
-        backgroundColor: const Color(0xFFF9F5EC),
-        title: Text(
-          "Events",
-          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+        backgroundColor: const Color(0xFF1947E5),
+        leading: IconButton(
+          onPressed: () {},
+          icon:
+              const Icon(Icons.menu, color: Color.fromARGB(221, 255, 255, 255)),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 16), // push text lower
+          child: Align(
+            alignment: Alignment.bottomCenter, // align title to bottom
+            child: Text(
+              "College\nEvents",
+              style: const TextStyle(
+                color: Color.fromARGB(221, 255, 255, 255),
+                fontWeight: FontWeight.bold,
+                fontSize: 44,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+          ),
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.notifications_none, color: Colors.black87),
+            icon: const Icon(Icons.notifications_none,
+                color: Color.fromARGB(221, 255, 255, 255)),
           ),
         ],
-      ),
+      ),  
+      // AppBar(
+      //   scrolledUnderElevation: 0,
+      //   backgroundColor: bg,
+      //   title: Text(
+      //     "Events",
+      //     style: const TextStyle(
+      //         color: Colors.black87, fontWeight: FontWeight.bold),
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.notifications_none, color: Colors.black87),
+      //     ),
+      //   ],
+      // ),
       AppBar(
+        centerTitle: true,
+        toolbarHeight: 118, // taller height
         scrolledUnderElevation: 0,
-        backgroundColor: const Color(0xFFF9F5EC),
-        title: Text(
-          "Profile",
-          style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+        backgroundColor: const Color(0xFF1947E5),
+        leading: IconButton(
+          onPressed: () {},
+          icon:
+              const Icon(Icons.menu, color: Color.fromARGB(221, 255, 255, 255)),
         ),
-      ),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 16), // push text lower
+          child: Align(
+            alignment: Alignment.bottomCenter, // align title to bottom
+            child: Text(
+              "Profile",
+              style: const TextStyle(
+                color: Color.fromARGB(221, 255, 255, 255),
+                fontWeight: FontWeight.bold,
+                fontSize: 27,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none,
+                color: Color.fromARGB(221, 255, 255, 255)),
+          ),
+        ],
+      ),  
     ];
 
     return Scaffold(

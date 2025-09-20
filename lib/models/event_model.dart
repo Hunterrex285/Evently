@@ -8,7 +8,7 @@ class Event {
   final DateTime endTime;
   final String link;
   final String? bannerUrl;
-  final List<String> organizers;
+  final String organizer;
 
   Event({
     required this.id,
@@ -17,8 +17,8 @@ class Event {
     required this.startTime,
     required this.endTime,
     required this.link,
+    required this.organizer,
     this.bannerUrl,
-    this.organizers = const [],
   });
 
   factory Event.fromDoc(DocumentSnapshot doc) {
@@ -32,7 +32,7 @@ class Event {
       endTime: (data['endTime'] as Timestamp).toDate(),
       link: data['link'] ?? '',
       bannerUrl: data['bannerUrl'],
-      organizers: List<String>.from(data['organizers'] ?? []),
+      organizer: data['organizer'] ?? '',
     );
   }
 
@@ -44,7 +44,7 @@ class Event {
       "endTime": endTime,
       "link": link,
       "bannerUrl": bannerUrl,
-      "organizers": organizers,
+      "organizer": organizer,
     };
   }
 }

@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PostCard extends StatelessWidget {
-  const PostCard(
-      {super.key,
-      required this.post,
-      required this.myVote,
-      required this.onUpvote,
-      required this.onDownvote,
-      required this.bgColor});
+  const PostCard({
+    super.key,
+    required this.post,
+    required this.myVote,
+    required this.onUpvote,
+    required this.onDownvote,
+    required this.bgColor, // Default yellow from design
+  });
 
   final Post post;
   final int myVote; // -1, 0, +1
@@ -22,96 +23,157 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 175,
+      width: double.infinity, 
       margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
         color: bgColor,
-        border: Border.all(
-          color: const Color.fromARGB(255, 0, 0, 0),
-          width: 1.5,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(
+            width: 2,
+            color: Color(0xFF18191F),
+            strokeAlign: BorderSide.strokeAlignOutside,
+          ),
+          borderRadius: BorderRadius.circular(16),
         ),
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
+        shadows: const [
           BoxShadow(
-              color: Colors.black,
-              offset: Offset(2, 4),
-              blurStyle: BlurStyle.solid)
+            color: Color(0xFF18191F),
+            blurRadius: 0,
+            offset: Offset(0, 2),
+            spreadRadius: 2,
+          ),
         ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Main content section
           Expanded(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-                  clipBehavior: Clip.hardEdge,
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white, // background
-                    borderRadius: BorderRadius.circular(80),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                  ),
-                  child: SvgPicture.asset(
-                    post.authorPfp,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Text(
-                      post.author,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                          fontSize: 16),
-                      softWrap: true,
+                    Container(
+                      width: 32,
+                      height: 32,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 2,
+                            color: Color(0xFF18191F),
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: SvgPicture.asset(
+                          post.authorPfp,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 8),
-                    TagChip(text: post.tag),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            post.author,
+                            style: const TextStyle(
+                              color: Color(0xFF18191F),
+                              fontSize: 15,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w800,
+                              height: 1.33,
+                            ),
+                          ),
+                          Text(
+                            _timeAgo(post.createdAt),
+                            style: const TextStyle(
+                              color: Color(0xFF474A57),
+                              fontSize: 11,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              height: 1.45,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ]),
-              const SizedBox(height: 8),
-              Text(post.title,
+                const SizedBox(height: 16),
+                
+                // Post title
+                Text(
+                  post.title,
                   style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700)),
-              const SizedBox(height: 8),
-              Text(post.desc,
+                    color: Color(0xFF18191F),
+                    fontSize: 21,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    height: 1.33,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  post.desc,
                   style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500)),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.comment, size: 18, color: Colors.black54),
-                  const SizedBox(width: 4),
-                  Text('${post.comments}'),
-                  const SizedBox(width: 12),
-                  const Icon(Icons.schedule, size: 18, color: Colors.black54),
-                  const SizedBox(width: 4),
-                  Text(_timeAgo(post.createdAt)),
-                ],
-              ),
-            ]),
+                    color: Color(0xFF18191F),
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    height: 1.33,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
+                ),
+                const SizedBox(height: 16),
+                
+                
+                // Bottom actions
+                Row(
+                  children: [
+                    Container(
+                      width: 18,
+                      height: 18,
+                      child: const Icon(
+                        Icons.comment_outlined,
+                        size: 18,
+                        color: Color(0xFF18191F),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${post.comments} Comments',
+                      style: const TextStyle(
+                        color: Color(0xFF18191F),
+                        fontSize: 13,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w800,
+                        height: 1.38,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           VoteColumn(
-              score: post.votes,
-              myVote: myVote,
-              onUp: onUpvote,
-              onDown: onDownvote),
-          const SizedBox(width: 12),
+            score: post.votes,
+            myVote: myVote,
+            onUp: onUpvote,
+            onDown: onDownvote,
+          ),
         ],
       ),
     );
@@ -119,8 +181,8 @@ class PostCard extends StatelessWidget {
 
   static String _timeAgo(DateTime dt) {
     final d = DateTime.now().difference(dt);
-    if (d.inMinutes < 60) return '${d.inMinutes}m';
-    if (d.inHours < 24) return '${d.inHours}h';
-    return '${d.inDays}d';
+    if (d.inMinutes < 60) return '${d.inMinutes}m ago';
+    if (d.inHours < 24) return '${d.inHours}h ago';
+    return '${d.inDays}d ago';
   }
 }

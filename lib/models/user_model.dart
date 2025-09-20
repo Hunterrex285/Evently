@@ -10,6 +10,8 @@ class UserModel {
   final String bio;           
   final String avatar;        
   final bool isOnboarded;     
+  final String role;          // NEW: 'user' or 'club'
+  
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -23,30 +25,32 @@ class UserModel {
     required this.bio,
     required this.avatar,
     required this.isOnboarded,
+    required this.role,        // NEW
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
-  final data = doc.data() as Map<String, dynamic>;
-  return UserModel(
-    uid: data['uid'] ?? '',
-    email: data['email'] ?? '',
-    name: data['name'] ?? '',
-    dept: data['dept'] ?? '',
-    yearOfPassing: data['yearOfPassing'] ?? '',
-    gender: data['gender'] ?? '',
-    bio: data['bio'] ?? '',
-    avatar: data['avatar'] ?? '',
-    isOnboarded: data['isOnboarded'] ?? false,
-    createdAt: data['createdAt'] != null
-        ? (data['createdAt'] as Timestamp).toDate()
-        : DateTime.now(), // fallback
-    updatedAt: data['updatedAt'] != null
-        ? (data['updatedAt'] as Timestamp).toDate()
-        : DateTime.now(), // fallback
-  );
-}
+    final data = doc.data() as Map<String, dynamic>;
+    return UserModel(
+      uid: data['uid'] ?? '',
+      email: data['email'] ?? '',
+      name: data['name'] ?? '',
+      dept: data['dept'] ?? '',
+      yearOfPassing: data['yearOfPassing'] ?? '',
+      gender: data['gender'] ?? '',
+      bio: data['bio'] ?? '',
+      avatar: data['avatar'] ?? '',
+      isOnboarded: data['isOnboarded'] ?? false,
+      role: data['role'] ?? 'user',           // NEW
+      createdAt: data['createdAt'] != null
+          ? (data['createdAt'] as Timestamp).toDate()
+          : DateTime.now(),
+      updatedAt: data['updatedAt'] != null
+          ? (data['updatedAt'] as Timestamp).toDate()
+          : DateTime.now(),
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -59,12 +63,12 @@ class UserModel {
       'bio': bio,
       'avatar': avatar,
       'isOnboarded': isOnboarded,
+      'role': role,                        // NEW
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
   }
 
-  /// 👇 Keep this inside the class
   UserModel copyWith({
     String? uid,
     String? email,
@@ -75,6 +79,7 @@ class UserModel {
     String? bio,
     String? avatar,
     bool? isOnboarded,
+    String? role,                          // NEW
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -88,6 +93,7 @@ class UserModel {
       bio: bio ?? this.bio,
       avatar: avatar ?? this.avatar,
       isOnboarded: isOnboarded ?? this.isOnboarded,
+      role: role ?? this.role,               // NEW
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
