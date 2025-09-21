@@ -1,8 +1,10 @@
 import 'package:evently/features/auth/onboarding.dart';
+import 'package:evently/features/auth/rolepage.dart';
 import 'package:evently/features/auth/signup_page.dart';
 import 'package:evently/features/main_page.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/services/auth_service.dart';
+import 'package:evently/widgets/button.dart';
 import 'package:evently/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -98,18 +100,54 @@ class _SigninPageState extends State<SigninPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SizedBox(height: 60),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const RolePage()),
+                  );
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(48.0),
+                    border: Border.all(color: Colors.black, width: 2),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black,
+                        spreadRadius: 0,
+                        blurRadius: 0,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.arrow_back, color: Colors.black),
+                ),
+              ),
+              const SizedBox(height: 48),
               const Text(
-                'Login to your Account',
+                'Log In',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
+                  fontSize: 36,
+                  fontWeight: FontWeight.w800,
                   fontFamily: 'Montserrat',
                 ),
               ),
               const SizedBox(height: 12),
+              const Text(
+                'You have chance to create new account if you really want to.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+              const SizedBox(height: 24),
               AppTextField(
                 controller: emailController,
                 label: "Email",
@@ -141,16 +179,8 @@ class _SigninPageState extends State<SigninPage> {
                 ],
               ),
               const SizedBox(height: 12),
-              Center(
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : signin,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 24.0),
-                    child: Text("Sign In"),
-                  ),
-                ),
-              ),
+              Button(isLoading: isLoading, text: "Log In", action: signin),
+              const SizedBox(height: 24),
               Center(
                 child: TextButton(
                   onPressed: () {

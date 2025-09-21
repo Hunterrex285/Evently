@@ -93,21 +93,6 @@ class _MainScaffoldState extends State<MainScaffold> {
           ),
         ],
       ),  
-      // AppBar(
-      //   scrolledUnderElevation: 0,
-      //   backgroundColor: bg,
-      //   title: Text(
-      //     "Events",
-      //     style: const TextStyle(
-      //         color: Colors.black87, fontWeight: FontWeight.bold),
-      //   ),
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.notifications_none, color: Colors.black87),
-      //     ),
-      //   ],
-      // ),
       AppBar(
         centerTitle: true,
         toolbarHeight: 118, // taller height

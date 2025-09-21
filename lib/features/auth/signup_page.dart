@@ -1,7 +1,9 @@
 import 'package:evently/features/auth/onboarding.dart';
+import 'package:evently/features/auth/rolepage.dart';
 import 'package:evently/features/auth/signin_page.dart';
 import 'package:evently/features/main_page.dart';
 import 'package:evently/providers/user_provider.dart';
+import 'package:evently/widgets/button.dart';
 import 'package:evently/widgets/textfield.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
@@ -101,77 +103,102 @@ class _SignUpPageState extends State<SignUpPage> {
       resizeToAvoidBottomInset: false, // prevents the screen from resizing
 
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Create your Account',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      fontFamily: 'Montserrat')),
-              SizedBox(height: 2),
-              AppTextField(
-                controller: nameController,
-                label: "Name",
-                icon: const Icon(Icons.person),
-              ),
-              SizedBox(height: 12),
-              AppTextField(
-                controller: emailController,
-                label: "Email",
-                icon: const Icon(Icons.email),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 12),
-              AppTextField(
-                controller: passwordController,
-                label: "Password",
-                obscureText: true,
-                icon: const Icon(Icons.lock),
-              ),
-              SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("Show Password", style: TextStyle(color: Colors.black)),
-                  Checkbox(
-                    value: showPassword,
-                    onChanged: (value) {
-                      setState(() {
-                        showPassword = value!;
-                      });
-                    },
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 60),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const RolePage()),
+                );
+              },
+              child: Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(48.0),
+                  border: Border.all(color: Colors.black, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black, // softer shadow
+                      spreadRadius: 0,
+                      blurRadius: 0, // softness of shadow edges
+                      offset: const Offset(0, 4), // vertical shift
+                    ),
                 ],
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : signUp,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 24.0),
-                    child: Text("Sign Up"),
-                  ),
                 ),
+                child: const Icon(Icons.arrow_back, color: Colors.black),
+                
               ),
-              Center(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => SigninPage()),
-                    );
+            ),
+
+            const SizedBox(height: 48),
+
+            Text('Sign Up',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Montserrat')),
+            SizedBox(height: 12),  
+            Text('You have chance to create new account if you really want to.',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Montserrat')),
+            SizedBox(height: 24),
+            AppTextField(
+              controller: nameController,
+              label: "Name",
+              icon: const Icon(Icons.person),
+            ),
+            SizedBox(height: 12),
+            AppTextField(
+              controller: emailController,
+              label: "Email",
+              icon: const Icon(Icons.email),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            SizedBox(height: 12),
+            AppTextField(
+              controller: passwordController,
+              label: "Password",
+              obscureText: showPassword ? false : true,
+              icon: const Icon(Icons.lock),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text("Show Password", style: TextStyle(color: Colors.black)),
+                Checkbox(
+                  value: showPassword,
+                  onChanged: (value) {
+                    setState(() {
+                      showPassword = value!;
+                    });
                   },
-                  child: Text("Already have an account? Sign In",
-                      style: TextStyle(color: Colors.black)),
                 ),
+              ],
+            ),
+            Button(isLoading: isLoading, action: signUp, text: "Sign Up"),
+            SizedBox(height: 12),
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => SigninPage()),
+                  );
+                },
+                child: Text("Already have an account? Sign In",
+                    style: TextStyle(color: Colors.black)),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

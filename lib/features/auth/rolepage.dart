@@ -30,7 +30,7 @@ class RolePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black26,
+                  color: Color.fromARGB(209, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 48),

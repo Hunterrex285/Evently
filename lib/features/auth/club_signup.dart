@@ -1,6 +1,8 @@
 import 'package:evently/features/auth/onboarding.dart';
+import 'package:evently/features/auth/rolepage.dart';
 import 'package:evently/features/auth/signin_page.dart';
 import 'package:evently/widgets/textfield.dart';
+import 'package:evently/widgets/button.dart';
 import '../../services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,6 @@ class ClubSignUpPage extends StatefulWidget {
 class _ClubSignUpPageState extends State<ClubSignUpPage> {
   final authService = AuthService();
   final nameController = TextEditingController(); // club name
-  final categoryController = TextEditingController(); // new field
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isLoading = false;
@@ -23,7 +24,6 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
   @override
   void dispose() {
     nameController.dispose();
-    categoryController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -39,7 +39,6 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
       );
 
       if (result != null && result.contains('@')) {
-        // ⚡ For now just show success since clubs won’t use UserProvider
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -51,7 +50,7 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OnboardingPage(), // custom onboarding for clubs
+                      builder: (context) => OnboardingPage(),
                     ),
                   );
                 },
@@ -61,9 +60,7 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
           ),
         );
 
-        // ✅ Clear fields
         nameController.clear();
-        categoryController.clear();
         emailController.clear();
         passwordController.clear();
       } else {
@@ -86,34 +83,70 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Center(
+      backgroundColor: Colors.white,
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Back button
+              const SizedBox(height: 60),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const RolePage()),
+                  );
+                },
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(48.0),
+                    border: Border.all(color: Colors.black, width: 2),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black,
+                        spreadRadius: 0,
+                        blurRadius: 0,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.arrow_back, color: Colors.black),
+                ),
+              ),
+
+              const SizedBox(height: 48),
+
+              // Title
               const Text(
-                'Create your Club Account',
+                'Sign Up',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
+                  fontSize: 36,
+                  fontWeight: FontWeight.w800,
                   fontFamily: 'Montserrat',
                 ),
               ),
               const SizedBox(height: 12),
+              const Text(
+                'You have chance to create new account if you really want to.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              // Fields
               AppTextField(
                 controller: nameController,
                 label: "Club Name",
                 icon: const Icon(Icons.groups),
-              ),
-              const SizedBox(height: 12),
-              AppTextField(
-                controller: categoryController,
-                label: "Category (e.g. Technical, Cultural)",
-                icon: const Icon(Icons.category),
               ),
               const SizedBox(height: 12),
               AppTextField(
@@ -129,8 +162,9 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
                 obscureText: !showPassword,
                 icon: const Icon(Icons.lock),
               ),
-              const SizedBox(height: 12),
+
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Text("Show Password", style: TextStyle(color: Colors.black)),
                   Checkbox(
@@ -141,19 +175,19 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : signUpClub,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 24.0),
-                    child: isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text("Sign Up"),
-                  ),
-                ),
+
+              const SizedBox(height: 12),
+
+              // Sign Up Button
+              Button(
+                isLoading: isLoading,
+                action: signUpClub,
+                text: "Sign Up",
               ),
+
+              const SizedBox(height: 12),
+
+              // Sign In Link
               Center(
                 child: TextButton(
                   onPressed: () {
