@@ -81,32 +81,30 @@ class _EventPageState extends State<EventPage> {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: ["Upcoming", "Expired", "Live"].map((tab) {
                   final isSelected = selectedTab == tab;
-                  return Expanded(
-                    // Expanded should wrap GestureDetector
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedTab = tab;
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center, // centers text inside
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? const Color(0xFF00C6AE)
-                              : const Color.fromARGB(0, 255, 135, 135),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          tab,
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : Colors.black,
-                          ),
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedTab = tab;
+                      });
+                    },
+                    child: Container(
+                      alignment: Alignment.center, // centers text inside
+                      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? const Color(0xFF00C6AE)
+                            : const Color.fromARGB(0, 255, 135, 135),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Text(
+                        tab,
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.bold,
+                          color: isSelected ? Colors.white : Colors.black,
                         ),
                       ),
                     ),

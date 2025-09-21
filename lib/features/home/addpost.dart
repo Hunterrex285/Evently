@@ -1,6 +1,7 @@
 import 'package:evently/models/post_model.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/services/post_service.dart';
+import 'package:evently/widgets/button.dart';
 import 'package:evently/widgets/dropdown.dart';
 import 'package:evently/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,8 @@ class _AddPostPageState extends State<AddPostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Post"),
+        backgroundColor: Color(0xFF1947E5),
+        title: const Text("Add Post", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 24)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -114,9 +116,11 @@ class _AddPostPageState extends State<AddPostPage> {
             ),
             AppTextField(controller: _tagController, label: "Tag"),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _submitForm(context),
-              child: const Text("Create Post"),
+            Button(
+              isLoading: 
+              false,
+              action: () => _submitForm(context),
+              text:"Create Post"
             ),
           ],
         ),

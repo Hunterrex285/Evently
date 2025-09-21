@@ -5,6 +5,7 @@ class AppDropdownField extends StatelessWidget {
   final String? value;
   final List<String> items;
   final Function(String?) onChanged;
+  final Widget? icon;
 
   const AppDropdownField({
     super.key,
@@ -12,26 +13,32 @@ class AppDropdownField extends StatelessWidget {
     required this.value,
     required this.items,
     required this.onChanged,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 56,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: DropdownButtonFormField<String>(
         value: value,
         decoration: InputDecoration(
+          prefixIcon: icon,
           labelText: label,
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: const BorderSide(color: Colors.black),
+          labelStyle: const TextStyle(color: Colors.black),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16.0),
+            borderSide: const BorderSide(color: Colors.black, width: 2),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: const BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.circular(16.0),
+            borderSide: const BorderSide(color: Colors.black, width: 2),
           ),
         ),
+        dropdownColor: Colors.white,
+        iconEnabledColor: Colors.black,
         items: items.map((String item) {
           return DropdownMenuItem(
             value: item,

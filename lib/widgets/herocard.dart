@@ -86,15 +86,18 @@ import 'package:flutter_svg/flutter_svg.dart';
                   crossAxisAlignment: CrossAxisAlignment.center,
                   spacing: 10,
                   children: [
-                    Text(
-                      'POST',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w800,
-                        height: 1.33,
+                    GestureDetector(
+                      onTap: onTap,
+                      child: Text(
+                        'POST',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w800,
+                          height: 1.33,
+                        ),
                       ),
                     ),
                   ],
