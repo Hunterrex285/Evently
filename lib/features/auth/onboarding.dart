@@ -23,18 +23,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
   late String avatar;
 
   final List<String> avatars = [
-    'icons/avatars/1.svg',
-    'icons/avatars/2.svg',
-    'icons/avatars/3.svg',
-    'icons/avatars/4.svg',
-    'icons/avatars/5.svg',
-    'icons/avatars/6.svg',
-    'icons/avatars/7.svg',
-    'icons/avatars/8.svg',
-    'icons/avatars/9.svg',
-    'icons/avatars/10.svg',
-    'icons/avatars/11.svg',
-    'icons/avatars/12.svg',
+    'assets/icons/avatars/1.svg',
+    'assets/icons/avatars/2.svg',
+    'assets/icons/avatars/3.svg',
+    'assets/icons/avatars/4.svg',
+    'assets/icons/avatars/5.svg',
+    'assets/icons/avatars/6.svg',
+    'assets/icons/avatars/7.svg',
+    'assets/icons/avatars/8.svg',
+    'assets/icons/avatars/9.svg',
+    'assets/icons/avatars/10.svg',
+    'assets/icons/avatars/11.svg',
+    'assets/icons/avatars/12.svg',
   ];
 
   int currentIndex = 0; // <-- define it

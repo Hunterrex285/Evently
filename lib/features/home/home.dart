@@ -103,7 +103,7 @@ class _CollegeHomePageState extends State<CollegeHomePage> {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
         HeroCard(
-          iconPath: "icons/hero.svg", // <-- pass PNG here
+          iconPath: "assets/icons/hero.svg", // <-- pass PNG here
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AddPostPage(),
