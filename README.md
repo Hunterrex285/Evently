@@ -12,20 +12,20 @@ Evently is a **community-driven app for college students**, designed to help stu
 - **Tagging System:** Add tags to posts for easy categorization and search.  
 - **Notifications:** Get notified about new posts, events, or relevant updates.  
 - **Admin Panel:** Manage events, moderate posts, and engage with students.  
-- **User Authentication:** Secure login system for students.  
+- **User Authentication:** Secure login system for students.   
 
 ---
 
 ## 💻 Tech Stack
 
 - **Frontend:** Flutter  
-- **Backend:** Firebase (Authentication, Firestore, Storage)  
-- **State Management:** Provider / GetX  
+- **Backend:** Firebase (Authentication, Firestore)  
+- **State Management:** Provider 
 - **Notifications:** Firebase Cloud Messaging  
 
 ---
 
 ## 📸 Screenshots
 
-![alt text](image.png)  ![alt text](image-1.png)  ![alt text](image-2.png)
+![alt text](image.png)  ![alt text](image-4.png) ![alt text](image-1.png)  ![alt text](image-2.png) ![alt text](image-3.png) ![alt text](image-5.png)
 
