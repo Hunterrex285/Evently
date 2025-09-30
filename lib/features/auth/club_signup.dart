@@ -1,8 +1,10 @@
-import 'package:evently/features/auth/onboarding.dart';
+import 'package:evently/features/auth/club_onboarding.dart';
 import 'package:evently/features/auth/rolepage.dart';
 import 'package:evently/features/auth/signin_page.dart';
+import 'package:evently/providers/club_provider.dart';
 import 'package:evently/widgets/textfield.dart';
 import 'package:evently/widgets/button.dart';
+import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
 import 'package:flutter/material.dart';
 
@@ -38,19 +40,26 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
         password: passwordController.text.trim(),
       );
 
-      if (result != null && result.contains('@')) {
+      if (result != null && result.toString().contains('@')) {
+        // Fetch user by email
+        final clubProvider = Provider.of<ClubProvider>(context, listen: false);
+        await clubProvider.setClub(
+            result.toString()); // setUser should fetch UserModel by email
+
+        final club = clubProvider.club;
+      if (club != null) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text("Sign Up Successful"),
-            content: Text("Welcome, ${nameController.text}!"),
+            content: Text("Welcome, ${club.orgName}!"),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OnboardingPage(),
+                      builder: (context) => ClubOnboardingPage(),
                     ),
                   );
                 },
@@ -58,7 +67,7 @@ class _ClubSignUpPageState extends State<ClubSignUpPage> {
               ),
             ],
           ),
-        );
+        );}
 
         nameController.clear();
         emailController.clear();
